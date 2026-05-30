@@ -395,7 +395,7 @@ function toggleCountry(code,el){
 }
 
 async function callClaude(prompt){
-  const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
+  const r=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
   const d=await r.json();
   if(!r.ok||d.error)throw new Error(d.error||'API fout '+r.status);
   return d.text.trim();
