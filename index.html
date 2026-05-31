@@ -213,53 +213,52 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <!-- PAGE BUILDER -->
     <div id="page-builder" style="display:none">
       <div class="page-header">
-        <div><div class="page-title">Pagina Bouwen</div><div class="page-sub">Vul in wat jij weet — AI schrijft de productpagina in jouw stijl</div></div>
+        <div><div class="page-title">Pagina Bouwen</div><div class="page-sub">Plak ruwe info — AI maakt er een eerlijke Miemasa productpagina van</div></div>
       </div>
       <div class="builder-wrap">
         <div class="builder-form">
 
           <div class="tip-box">
-            <strong>Hoe het werkt:</strong> Vul in wat jij zeker weet over het product. AI verzint niks erbij — alleen wat jij invult komt op de pagina.
+            <strong>Hoe het werkt:</strong> Plak info van AliExpress, een concurrent, TikTok — in elke taal. AI haalt zelf de relevante info eruit, filtert verkooptrucjes weg en schrijft een eerlijke pagina in jouw stijl. Nederlandse vertaling staat er altijd bij zodat jij kunt controleren.
           </div>
 
           <div>
-            <div class="field-label">PRODUCTNAAM (merknaam + product)</div>
+            <div class="field-label">PRODUCTNAAM + MERKNAAM</div>
             <input class="field-input" id="b-naam" placeholder="bijv. Buniks™ – Repellente ultrasuoni" />
           </div>
-          <div>
-            <div class="field-label">CATEGORIE</div>
-            <input class="field-input" id="b-cat" placeholder="bijv. Huishouden, Zomer, Auto..." />
-          </div>
-          <div>
-            <div class="field-label">WAT DOET HET? (in jouw woorden)</div>
-            <textarea class="field-textarea" id="b-wat" placeholder="Beschrijf wat het product doet en het probleem dat het oplost. NL of IT mag."></textarea>
-          </div>
-          <div>
-            <div class="field-label">VOOR WIE IS HET?</div>
-            <input class="field-input" id="b-wie" placeholder="bijv. gezinnen, mensen die bewuster willen eten, ouders..." />
-          </div>
-          <div>
-            <div class="field-label">EXTRA VERKOOPHOEK (optioneel)</div>
-            <input class="field-input" id="b-hoek" placeholder="bijv. helpt bij bewuster eten, ideaal voor zomer, veilig voor kinderen..." />
-          </div>
 
-          <div class="form-divider">
-            <div class="form-divider-title">PRIJZEN</div>
+          <div>
+            <div class="field-label">PRIJZEN</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-              <div><div class="field-label">1x</div><input class="field-input" id="b-1x" placeholder="27,99" /></div>
-              <div><div class="field-label">2x (optioneel)</div><input class="field-input" id="b-2x" placeholder="44,99" /></div>
-              <div><div class="field-label">3x (optioneel)</div><input class="field-input" id="b-3x" placeholder="57,99" /></div>
+              <div><div class="field-label" style="margin-top:4px">1x (€)</div><input class="field-input" id="b-1x" placeholder="27,99" /></div>
+              <div><div class="field-label" style="margin-top:4px">2x (€) optioneel</div><input class="field-input" id="b-2x" placeholder="44,99" /></div>
+              <div><div class="field-label" style="margin-top:4px">3x (€) optioneel</div><input class="field-input" id="b-3x" placeholder="57,99" /></div>
             </div>
           </div>
 
-          <div class="form-divider">
-            <div class="form-divider-title">SPECIFICATIES (alleen wat zeker is)</div>
-            <textarea class="field-textarea" id="b-specs" placeholder="bijv. Kleur: wit, Voeding: stopcontact, Technologie: ultrasuoni, Afmetingen: 10x5cm..." style="min-height:70px"></textarea>
+          <div>
+            <div class="field-label">BRON 1 — plak hier info (AliExpress, leverancier, etc.)</div>
+            <textarea class="field-textarea" id="b-bron1" placeholder="Plak hier productbeschrijving, specs, kenmerken — in elke taal..." style="min-height:100px"></textarea>
+          </div>
+
+          <div>
+            <div class="field-label">BRON 2 — plak hier info (concurrent, webshop, etc.)</div>
+            <textarea class="field-textarea" id="b-bron2" placeholder="Plak hier info van een andere webshop of bron..." style="min-height:100px"></textarea>
+          </div>
+
+          <div>
+            <div class="field-label">BRON 3 — plak hier info (TikTok, review, etc.)</div>
+            <textarea class="field-textarea" id="b-bron3" placeholder="Plak hier TikTok beschrijving, reviews of andere info..." style="min-height:100px"></textarea>
+          </div>
+
+          <div>
+            <div class="field-label">BRON 4 — extra info (optioneel)</div>
+            <textarea class="field-textarea" id="b-bron4" placeholder="Nog meer info? Plak hier..." style="min-height:70px"></textarea>
           </div>
 
           <div class="form-divider">
-            <div class="form-divider-title">WAT NIET VERMELDEN? (optioneel)</div>
-            <input class="field-input" id="b-niet" placeholder="bijv. niet vermelden ratten, geen landverwijzingen, geen batterij..." />
+            <div class="form-divider-title">EXTRA INSTRUCTIES (optioneel)</div>
+            <input class="field-input" id="b-niet" placeholder="bijv. niet vermelden ratten, focus op zomer, veilig voor kinderen..." />
           </div>
 
           <button class="btn-generate" id="gen-btn" onclick="generatePage()">
@@ -277,9 +276,9 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           </div>
           <div class="preview-body" id="preview-body">
             <div style="text-align:center;padding:60px 20px;color:#888;font-size:13px">
-              <div style="font-size:40px;margin-bottom:12px">✍️</div>
-              Vul de productinfo in en klik op genereren.<br>
-              <span style="font-size:11px;opacity:0.6">De HTML verschijnt hier — klaar om in Shopify te plakken</span>
+              <div style="font-size:40px;margin-bottom:12px">📋</div>
+              Plak info in de velden links en klik op genereren.<br>
+              <span style="font-size:11px;opacity:0.6">AI haalt er zelf de relevante info uit</span>
             </div>
           </div>
           <div class="nl-box" id="nl-box"></div>
@@ -404,78 +403,67 @@ async function callClaude(prompt){
 // ─── PAGE GENERATOR ───────────────────────────────────────────────────────
 async function generatePage(){
   const naam=document.getElementById('b-naam').value.trim();
-  const cat=document.getElementById('b-cat').value.trim();
-  const wat=document.getElementById('b-wat').value.trim();
-  const wie=document.getElementById('b-wie').value.trim();
-  const hoek=document.getElementById('b-hoek').value.trim();
   const p1x=document.getElementById('b-1x').value.trim();
   const p2x=document.getElementById('b-2x').value.trim();
   const p3x=document.getElementById('b-3x').value.trim();
-  const specs=document.getElementById('b-specs').value.trim();
+  const bron1=document.getElementById('b-bron1').value.trim();
+  const bron2=document.getElementById('b-bron2').value.trim();
+  const bron3=document.getElementById('b-bron3').value.trim();
+  const bron4=document.getElementById('b-bron4').value.trim();
   const niet=document.getElementById('b-niet').value.trim();
 
-  if(!naam||!wat){toast('Vul minimaal productnaam en omschrijving in','err');return;}
+  if(!naam){toast('Vul minimaal de productnaam in','err');return;}
+  if(!bron1&&!bron2&&!bron3){toast('Plak minimaal één bron in','err');return;}
 
   const btn=document.getElementById('gen-btn');
   btn.disabled=true;
-  btn.innerHTML='<span class="spin"></span> Pagina schrijven...';
-  document.getElementById('preview-body').innerHTML='<div style="text-align:center;padding:60px 20px;color:#888;font-size:13px"><div style="font-size:32px;margin-bottom:12px">✍️</div>Bezig met schrijven...<br><span style="font-size:11px;opacity:0.6">~20 seconden</span></div>';
+  btn.innerHTML='<span class="spin"></span> AI analyseert bronnen...';
+  document.getElementById('preview-body').innerHTML='<div style="text-align:center;padding:60px 20px;color:#888;font-size:13px"><div style="font-size:32px;margin-bottom:12px">🔍</div>AI analyseert bronnen en schrijft pagina...<br><span style="font-size:11px;opacity:0.6">~25 seconden</span></div>';
 
-  const prompt=`${BRAND_DNA}
+  const bronnen=[bron1?'BRON 1:\n'+bron1:'',bron2?'BRON 2:\n'+bron2:'',bron3?'BRON 3:\n'+bron3:'',bron4?'BRON 4:\n'+bron4:''].filter(Boolean).join('\n\n');
 
-Schrijf nu een volledige Italiaanse Shopify productbeschrijving voor:
+  const prompt=BRAND_DNA+`
+
+Je krijgt ruwe productinfo uit verschillende bronnen in verschillende talen. Jouw taak:
+1. Analyseer alle bronnen en haal de FEITELIJKE info eruit
+2. Filter weg: overdreven claims, verkooptrucjes, onverifieerbare info, landverwijzingen
+3. Schrijf een eerlijke Italiaanse productpagina in Miemasa stijl
+4. Verzin NIETS — gebruik alleen wat aantoonbaar uit de bronnen komt
 
 PRODUCT: ${naam}
-CATEGORIE: ${cat||'niet opgegeven'}
-WAT HET DOET: ${wat}
-DOELGROEP: ${wie||'niet opgegeven'}
-${hoek?'VERKOOPHOEK: '+hoek:''}
-${p1x?'PRIJS 1 STUK: euro'+p1x:''}
-${p2x?'PRIJS 2 STUKS: euro'+p2x+' (toon per-stuk prijs subtiel)':''}
-${p3x?'PRIJS 3 STUKS: euro'+p3x+' (toon per-stuk prijs subtiel)':''}
-${specs?'SPECIFICATIES (alleen deze, niets toevoegen): '+specs:'SPECIFICATIES: geen — laat de Specifiche sectie weg'}
+${p1x?'PRIJS 1x: euro'+p1x:''}
+${p2x?'PRIJS 2x: euro'+p2x+' (subtiel per-stuk prijs tonen)':''}
+${p3x?'PRIJS 3x: euro'+p3x+' (subtiel per-stuk prijs tonen)':''}
 ${niet?'NIET VERMELDEN: '+niet:''}
 
-Geef je antwoord als JSON zonder markdown:
-{
-  "html": "volledige HTML beschrijving volgens de layout regels — gebruik [AFBEELDING_1] en [AFBEELDING_2] als placeholder",
-  "nl_vertaling": "Nederlandse vertaling sectie voor sectie zodat de eigenaar kan controleren wat er staat",
-  "seo_titel": "Italiaanse SEO titel max 60 tekens",
-  "seo_beschrijving": "Italiaanse meta beschrijving max 160 tekens"
-}`;
+RUWE BRONNEN:
+${bronnen}
+
+Geef antwoord als JSON zonder markdown:
+{"html":"volledige HTML in Italiaans met [AFBEELDING_1] en [AFBEELDING_2] placeholders","nl_vertaling":"Nederlandse vertaling sectie voor sectie","seo_titel":"Italiaanse SEO titel max 60 tekens","seo_beschrijving":"Italiaanse meta beschrijving max 160 tekens","weggefilterd":"Kort in NL wat AI heeft weggefilerd als verkooptrucje of onverifieerbare claim"}`;
 
   try{
     const raw=await callClaude(prompt);
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=JSON.parse(clean);
-
     generatedHTML=parsed.html;
     generatedNL=parsed.nl_vertaling;
-
     const preview=generatedHTML
       .replace(/\[AFBEELDING_1\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 1</div>')
       .replace(/\[AFBEELDING_2\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 2</div>');
-
-    document.getElementById('preview-body').innerHTML=`
-      <div style="background:#f0f4f7;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#555;line-height:1.6">
-        <strong>SEO:</strong> ${parsed.seo_titel}<br>
-        <strong>Meta:</strong> ${parsed.seo_beschrijving}
-      </div>
-      <div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.7">${preview}</div>`;
-
+    const wegHtml=parsed.weggefilterd?`<div style="background:#fff8e6;border:1px solid #f0d060;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#7a6010"><strong>⚠️ Weggefilerd:</strong> ${parsed.weggefilterd}</div>`:'';
+    document.getElementById('preview-body').innerHTML=`<div style="background:#f0f4f7;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#555;line-height:1.6"><strong>SEO:</strong> ${parsed.seo_titel}<br><strong>Meta:</strong> ${parsed.seo_beschrijving}</div>${wegHtml}<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.7">${preview}</div>`;
     document.getElementById('nl-box').textContent=parsed.nl_vertaling;
     document.getElementById('copy-btn').style.display='block';
     document.getElementById('nl-toggle-btn').style.display='block';
     document.getElementById('preview-title').textContent='Voorvertoning — '+naam;
-
     addedCount++;
     document.getElementById('s-added').textContent=addedCount;
-    toast('Pagina klaar! Controleer en kopieer voor Shopify.','ok');
+    toast('Pagina klaar! Controleer NL vertaling voor je kopieert.','ok');
   }catch(e){
     document.getElementById('preview-body').innerHTML='<div style="color:#e85050;padding:20px;text-align:center;font-size:13px">Fout: '+e.message+'</div>';
     toast(e.message,'err');
   }
-
   btn.disabled=false;
   btn.innerHTML='✍️ Genereer productpagina';
 }
