@@ -431,11 +431,14 @@ async function generatePage(){
 
   const prompt=BRAND_DNA+`
 
+BELANGRIJK: Schrijf de "html" veld VOLLEDIG IN HET ITALIAANS. Elk woord in de HTML moet Italiaans zijn. Alleen "nl_vertaling" is in het Nederlands.
+
 Je krijgt ruwe productinfo uit verschillende bronnen in verschillende talen. Jouw taak:
 1. Analyseer alle bronnen en haal de FEITELIJKE info eruit
 2. Filter weg: overdreven claims, verkooptrucjes, onverifieerbare info, landverwijzingen
-3. Schrijf een eerlijke Italiaanse productpagina in Miemasa stijl
+3. Schrijf een eerlijke productpagina VOLLEDIG IN HET ITALIAANS in Miemasa stijl
 4. Verzin NIETS — gebruik alleen wat aantoonbaar uit de bronnen komt
+5. De html moet 100% Italiaans zijn — geen enkel Nederlands woord
 
 PRODUCT: ${naam}
 ${p1x?'PRIJS 1x: euro'+p1x:''}
@@ -443,11 +446,11 @@ ${p2x?'PRIJS 2x: euro'+p2x+' (subtiel per-stuk prijs tonen)':''}
 ${p3x?'PRIJS 3x: euro'+p3x+' (subtiel per-stuk prijs tonen)':''}
 ${niet?'NIET VERMELDEN: '+niet:''}
 
-RUWE BRONNEN:
+RUWE BRONNEN (in verschillende talen — jij schrijft de output in het ITALIAANS):
 ${bronnen}
 
 Geef antwoord als JSON zonder markdown:
-{"html":"volledige HTML in Italiaans met [AFBEELDING_1] en [AFBEELDING_2] placeholders","nl_vertaling":"Nederlandse vertaling sectie voor sectie","seo_titel":"Italiaanse SEO titel max 60 tekens","seo_beschrijving":"Italiaanse meta beschrijving max 160 tekens","weggefilterd":"Kort in NL wat AI heeft weggefilerd als verkooptrucje of onverifieerbare claim"}`;
+{"html":"VOLLEDIG ITALIAANSE HTML met [AFBEELDING_1] en [AFBEELDING_2] placeholders — geen enkel Nederlands woord","nl_vertaling":"Nederlandse vertaling van de Italiaanse tekst sectie voor sectie — zodat eigenaar kan controleren","seo_titel":"Italiaanse SEO titel max 60 tekens","seo_beschrijving":"Italiaanse meta beschrijving max 160 tekens","weggefilterd":"Kort in NL wat AI heeft weggefilerd als verkooptrucje of onverifieerbare claim"}`;
 
   try{
     const raw=await callClaude(prompt);
@@ -495,7 +498,7 @@ function showLang(lang){
     btnIt.style.background='rgba(25,58,71,0.3)';btnIt.style.borderColor='var(--accent2)';btnIt.style.color='var(--accent3)';
     btnNl.style.background='transparent';btnNl.style.borderColor='';btnNl.style.color='';
   }else{
-    body.innerHTML='<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.8;padding:4px 0;white-space:pre-wrap">'+generatedNL_text+'</div>';
+    body.innerHTML='<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.8;padding:4px 0;white-space:pre-wrap">'+generatedNL_text.replace(/\[AFBEELDING_1\]/g,'[📷 Afbeelding 1]').replace(/\[AFBEELDING_2\]/g,'[📷 Afbeelding 2]')+'</div>';
     btnNl.style.background='rgba(25,58,71,0.3)';btnNl.style.borderColor='var(--accent2)';btnNl.style.color='var(--accent3)';
     btnIt.style.background='transparent';btnIt.style.borderColor='';btnIt.style.color='';
   }
