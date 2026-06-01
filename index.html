@@ -269,8 +269,9 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <div class="builder-preview">
           <div class="preview-header">
             <span class="preview-title" id="preview-title">Voorvertoning</span>
-            <div style="display:flex;gap:8px">
-              <button class="btn-nl" id="nl-toggle-btn" onclick="toggleNL()" style="display:none">🇳🇱 NL vertaling</button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn-nl" id="btn-show-it" onclick="showLang('it')" style="display:none;background:rgba(25,58,71,0.3);border-color:var(--accent2);color:var(--accent3)">🇮🇹 Italiaans</button>
+              <button class="btn-nl" id="btn-show-nl" onclick="showLang('nl')" style="display:none">🇳🇱 Nederlands</button>
               <button class="btn-copy" id="copy-btn" onclick="copyHTML()" style="display:none">📋 Kopieer voor Shopify</button>
             </div>
           </div>
@@ -281,7 +282,13 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
               <span style="font-size:11px;opacity:0.6">AI haalt er zelf de relevante info uit</span>
             </div>
           </div>
-          <div class="nl-box" id="nl-box"></div>
+          <div id="aanpassen-balk" style="display:none;padding:12px 16px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(23,23,36,1)">
+            <div style="font-size:10px;font-family:DM Mono,monospace;color:#62627a;letter-spacing:0.1em;margin-bottom:6px">WAT WIL JE AANPASSEN?</div>
+            <div style="display:flex;gap:8px">
+              <input class="field-input" id="aanpassen-input" placeholder="bijv. opening sterker, toon zakelijker, spec weghalen..." style="flex:1;padding:8px 12px;font-size:12px" />
+              <button onclick="aanpassenPage()" id="aanpassen-btn" style="background:linear-gradient(135deg,#193a47,#265466);color:#CFE2EB;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-family:Syne,sans-serif;font-weight:700;cursor:pointer;white-space:nowrap">↺ Aanpassen</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -352,7 +359,7 @@ Fout: "Precisione fino a 1 grammo"`;
 // ─── State ────────────────────────────────────────────────────────────────
 let products=[],pagesBuilt={},addedCount=0,scoreFilter='all',catFilter='';
 let selectedCountries=['NL','BE','DE','UK','US','FR'];
-let generatedHTML='', generatedNL='';
+let generatedHTML='', generatedNL='', generatedNL_text='', generatedIT_preview='', generatedSEO='', generatedMeta='', generatedWeggefilerd='', currentLang='it';
 let cfg={key:'',store:'miemasa.myshopify.com',token:'',minPrice:20,maxPrice:100};
 const countryNames={NL:'Nederland',BE:'Belgie',DE:'Duitsland',UK:'UK',US:'VS',FR:'Frankrijk'};
 
@@ -453,9 +460,17 @@ Geef antwoord als JSON zonder markdown:
       .replace(/\[AFBEELDING_2\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 2</div>');
     const wegHtml=parsed.weggefilterd?`<div style="background:#fff8e6;border:1px solid #f0d060;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#7a6010"><strong>⚠️ Weggefilerd:</strong> ${parsed.weggefilterd}</div>`:'';
     document.getElementById('preview-body').innerHTML=`<div style="background:#f0f4f7;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#555;line-height:1.6"><strong>SEO:</strong> ${parsed.seo_titel}<br><strong>Meta:</strong> ${parsed.seo_beschrijving}</div>${wegHtml}<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.7">${preview}</div>`;
-    document.getElementById('nl-box').textContent=parsed.nl_vertaling;
+    generatedNL_text=parsed.nl_vertaling;
+    generatedSEO=parsed.seo_titel;
+    generatedMeta=parsed.seo_beschrijving;
+    generatedWeggefilerd=parsed.weggefilterd||'';
+    generatedIT_preview=buildPreview(parsed.html);
+    currentLang='it';
+    document.getElementById('preview-body').innerHTML=generatedIT_preview;
     document.getElementById('copy-btn').style.display='block';
-    document.getElementById('nl-toggle-btn').style.display='block';
+    document.getElementById('btn-show-it').style.display='block';
+    document.getElementById('btn-show-nl').style.display='block';
+    document.getElementById('aanpassen-balk').style.display='block';
     document.getElementById('preview-title').textContent='Voorvertoning — '+naam;
     addedCount++;
     document.getElementById('s-added').textContent=addedCount;
@@ -468,11 +483,49 @@ Geef antwoord als JSON zonder markdown:
   btn.innerHTML='✍️ Genereer productpagina';
 }
 
-function toggleNL(){
-  const box=document.getElementById('nl-box');
-  box.classList.toggle('show');
-  const btn=document.getElementById('nl-toggle-btn');
-  btn.textContent=box.classList.contains('show')?'🇳🇱 Verberg vertaling':'🇳🇱 NL vertaling';
+let generatedNL_text='';
+let generatedIT_preview='';
+let currentLang='it';
+
+function showLang(lang){
+  currentLang=lang;
+  const body=document.getElementById('preview-body');
+  const btnIt=document.getElementById('btn-show-it');
+  const btnNl=document.getElementById('btn-show-nl');
+  if(lang==='it'){
+    body.innerHTML=generatedIT_preview;
+    btnIt.style.background='rgba(25,58,71,0.3)';btnIt.style.borderColor='var(--accent2)';btnIt.style.color='var(--accent3)';
+    btnNl.style.background='transparent';btnNl.style.borderColor='';btnNl.style.color='';
+  }else{
+    body.innerHTML='<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.8;padding:4px 0;white-space:pre-wrap">'+generatedNL_text+'</div>';
+    btnNl.style.background='rgba(25,58,71,0.3)';btnNl.style.borderColor='var(--accent2)';btnNl.style.color='var(--accent3)';
+    btnIt.style.background='transparent';btnIt.style.borderColor='';btnIt.style.color='';
+  }
+}
+
+async function aanpassenPage(){
+  const instructie=document.getElementById('aanpassen-input').value.trim();
+  if(!instructie){toast('Typ eerst wat je wil aanpassen','err');return;}
+  if(!generatedHTML){toast('Eerst een pagina genereren','err');return;}
+  const btn=document.getElementById('aanpassen-btn');
+  btn.textContent='⏳ Bezig...';btn.disabled=true;
+  try{
+    const prompt=BRAND_DNA+`\n\nPas de volgende Italiaanse productpagina aan op basis van de instructie.\n\nHUIDIGE HTML:\n${generatedHTML}\n\nAANPASSINGSINSTRUCTIE: ${instructie}\n\nGeef ALLEEN de aangepaste versie terug als JSON zonder markdown:\n{"html":"aangepaste HTML","nl_vertaling":"Nederlandse vertaling van de aangepaste versie","seo_titel":"SEO titel","seo_beschrijving":"meta beschrijving"}`;
+    const raw=await callClaude(prompt);
+    const parsed=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
+    generatedHTML=parsed.html;
+    generatedNL_text=parsed.nl_vertaling;
+    generatedIT_preview=buildPreview(parsed.html);
+    showLang(currentLang);
+    document.getElementById('aanpassen-input').value='';
+    toast('Pagina aangepast!','ok');
+  }catch(e){toast(e.message,'err');}
+  btn.textContent='↺ Aanpassen';btn.disabled=false;
+}
+
+function buildPreview(html){
+  const wegHtml=generatedWeggefilerd?`<div style="background:#fff8e6;border:1px solid #f0d060;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#7a6010"><strong>⚠️ Weggefilerd:</strong> ${generatedWeggefilerd}</div>`:'';
+  return `<div style="background:#f0f4f7;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#555;line-height:1.6"><strong>SEO:</strong> ${generatedSEO}<br><strong>Meta:</strong> ${generatedMeta}</div>${wegHtml}<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.7">${html.replace(/\[AFBEELDING_1\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 1</div>').replace(/\[AFBEELDING_2\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 2</div>')}</div>`;
 }
 
 function copyHTML(){
@@ -513,21 +566,23 @@ Geef ALLEEN JSON array, geen markdown:
 
 function sendToBuilder(idx){
   const p=products[idx];
+  // Vul productnaam in als hint
   document.getElementById('b-naam').value=p.naam;
-  document.getElementById('b-cat').value=p.categorie;
-  document.getElementById('b-wat').value=p.waarom;
-  document.getElementById('b-wie').value='';
-  document.getElementById('b-hoek').value='';
   document.getElementById('b-1x').value=p.verkoopMin+'';
   document.getElementById('b-2x').value='';
   document.getElementById('b-3x').value='';
-  document.getElementById('b-specs').value='';
-  document.getElementById('b-niet').value='';
+  // Zet een hint in bron 1 zodat gebruiker weet wat te plakken
+  document.getElementById('b-bron1').value='Productnaam: '+p.naam+'\nCategorie: '+p.categorie+'\nWaarom het verkoopt: '+p.waarom+'\n\n[Plak hier extra info van AliExpress of leverancier]';
+  document.getElementById('b-bron2').value='';
+  document.getElementById('b-bron3').value='';
+  document.getElementById('b-bron4').value='';
+  document.getElementById('b-niet').value='geen landverwijzingen';
   pagesBuilt[idx]=true;
   const btn=document.getElementById('btn-'+idx);
   if(btn){btn.className='btn-card done';btn.innerHTML='✍️ In builder';}
+  // Bewaar producten zodat ze niet gereset worden
   showPage('builder');
-  toast('Productinfo ingevuld — vul aan en klik op genereren','ok');
+  toast('Productnaam ingevuld — plak extra info en genereer!','ok');
 }
 
 function fbUrl(p){return'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&q='+encodeURIComponent(p.fbZoekterm||p.naam)+'&search_type=keyword_unordered&media_type=all';}
@@ -602,10 +657,12 @@ function clearAll(){
 }
 function showPage(page){
   ['research','builder','settings'].forEach(p=>{
-    document.getElementById('page-'+p).style.display=p===page?'block':'none';
+    const el=document.getElementById('page-'+p);
+    if(el) el.style.display=p===page?'block':'none';
     const n=document.getElementById('nav-'+p);
     if(n)n.classList.toggle('active',p===page);
   });
+  // Producten NIET resetten bij pagina wisseling
 }
 function toast(msg,type){
   const t=document.getElementById('toast');
