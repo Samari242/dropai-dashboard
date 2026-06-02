@@ -498,6 +498,15 @@ async function callClaude(prompt){
 }
 
 // ─── FOTO GENERATOR ───────────────────────────────────────────────────────
+function downloadImg(btn){
+  const img = btn.closest('.foto-card').querySelector('img');
+  if(!img) return;
+  const a = document.createElement('a');
+  a.href = img.src;
+  a.download = 'miemasa-foto.png';
+  a.click();
+}
+
 function selectStyle(style, el){
   fotoStyle = style;
   document.querySelectorAll('.style-card').forEach(c=>c.classList.remove('active'));
@@ -572,7 +581,7 @@ async function generateFotos(){
           <div class="foto-card-body">
             <div class="foto-card-label">${naam} — stijl: ${fotoStyle}</div>
             <div class="foto-card-btns">
-              <a class="btn-download" href="${result.value.url}" download="miemasa-foto-${i+1}.jpg" target="_blank">⬇ Download</a>
+              <button class="btn-download" onclick="downloadImg(this)">⬇ Download</button>
             </div>
           </div>
         </div>`;
@@ -589,7 +598,7 @@ async function generateFotos(){
 
   resultaat.innerHTML = `<div class="foto-grid">${newCards}</div>
     <div style="margin-top:12px;font-size:11px;color:var(--muted);font-family:DM Mono,monospace">
-      💡 Tip: download de foto en upload hem in Shopify. DALL-E links verlopen na 1 uur.
+      💡 Tip: download de foto direct en upload hem in Shopify.
     </div>`;
 
   const succeeded = results.filter(r=>r.status==='fulfilled').length;
