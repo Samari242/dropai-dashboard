@@ -78,7 +78,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 .metric-val { font-size:12px; font-weight:700; font-family:'DM Mono',monospace; }
 .metric-val.green { color:var(--green2); }
 .metric-label { font-size:9px; color:var(--muted); margin-top:1px; font-family:'DM Mono',monospace; }
-.social-btns { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+.social-btns { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px; }
 .btn-fb { display:flex; align-items:center; justify-content:center; gap:5px; padding:7px; border-radius:8px; font-size:11px; font-weight:600; font-family:'Syne',sans-serif; cursor:pointer; text-decoration:none; background:rgba(24,119,242,.15); color:#60a5fa; border:1px solid rgba(24,119,242,.25); }
 .btn-tt { display:flex; align-items:center; justify-content:center; gap:5px; padding:7px; border-radius:8px; font-size:11px; font-weight:600; font-family:'Syne',sans-serif; cursor:pointer; text-decoration:none; background:rgba(255,0,80,.15); color:#f87171; border:1px solid rgba(255,0,80,.25); }
 .card-actions { display:flex; gap:7px; }
@@ -86,6 +86,8 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 .btn-card:hover:not(:disabled) { background:var(--accent2); }
 .btn-card:disabled { opacity:.5; cursor:not-allowed; }
 .btn-card.done { background:#1a5c3a; color:#4ade98; }
+.btn-card-img { flex:1; background:rgba(25,58,71,0.25); color:var(--accent3); border:1px solid rgba(38,84,102,0.3); padding:8px; border-radius:8px; font-size:12px; font-family:'Syne',sans-serif; font-weight:700; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:5px; }
+.btn-card-img:hover { background:rgba(38,84,102,0.4); }
 .empty-state { grid-column:1/-1; text-align:center; padding:60px 20px; }
 .empty-icon { font-size:48px; margin-bottom:12px; }
 .empty-title { font-size:18px; font-weight:800; margin-bottom:6px; }
@@ -118,6 +120,28 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 .nl-box.show { display: block; }
 .tip-box { background: rgba(25,58,71,0.1); border: 1px solid rgba(38,84,102,0.2); border-radius: 8px; padding: 10px 12px; font-size: 11px; color: var(--muted2); line-height: 1.6; }
 .tip-box strong { color: var(--accent3); }
+
+/* FOTO GENERATOR */
+.foto-wrap { max-width: 860px; }
+.foto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-top: 20px; }
+.foto-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.2s; }
+.foto-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.foto-img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.foto-img-placeholder { width: 100%; aspect-ratio: 1; background: var(--surface2); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--muted); font-size: 12px; font-family: 'DM Mono', monospace; }
+.foto-card-body { padding: 10px 12px; }
+.foto-card-label { font-size: 11px; color: var(--muted2); line-height: 1.4; margin-bottom: 8px; }
+.foto-card-btns { display: flex; gap: 6px; }
+.btn-download { flex: 1; background: var(--accent); color: var(--accent3); border: none; padding: 7px; border-radius: 7px; font-size: 11px; font-family: 'Syne', sans-serif; font-weight: 700; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 4px; }
+.btn-download:hover { background: var(--accent2); }
+.style-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+.style-card { padding: 10px; border-radius: 10px; border: 1px solid var(--border2); cursor: pointer; text-align: center; transition: all 0.15s; }
+.style-card:hover { border-color: var(--accent2); }
+.style-card.active { background: rgba(25,58,71,0.3); border-color: var(--accent2); }
+.style-card-icon { font-size: 22px; margin-bottom: 4px; }
+.style-card-name { font-size: 11px; font-weight: 700; color: var(--muted3); }
+.style-card-desc { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+.generating-overlay { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; }
+.generating-text { font-size: 13px; color: var(--muted2); font-family: 'DM Mono', monospace; }
 
 /* SETTINGS */
 .settings-wrap { max-width: 480px; }
@@ -155,6 +179,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div class="nav-lbl">Menu</div>
     <div class="nav-item active" id="nav-research" onclick="showPage('research')">🔍 Product Research <span class="nav-badge" id="nav-count">0</span></div>
     <div class="nav-item" id="nav-builder" onclick="showPage('builder')">✍️ Pagina Bouwen</div>
+    <div class="nav-item" id="nav-foto" onclick="showPage('foto')">📸 Foto Generator</div>
     <div class="nav-item" id="nav-settings" onclick="showPage('settings')">⚙️ Instellingen</div>
     <div class="nav-lbl">Categorie filter</div>
     <div class="nav-item" onclick="setCat('')">↩ Alles</div>
@@ -217,16 +242,13 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
       </div>
       <div class="builder-wrap">
         <div class="builder-form">
-
           <div class="tip-box">
             <strong>Hoe het werkt:</strong> Plak info van AliExpress, een concurrent, TikTok — in elke taal. AI haalt zelf de relevante info eruit, filtert verkooptrucjes weg en schrijft een eerlijke pagina in jouw stijl. Nederlandse vertaling staat er altijd bij zodat jij kunt controleren.
           </div>
-
           <div>
             <div class="field-label">PRODUCTNAAM + MERKNAAM</div>
             <input class="field-input" id="b-naam" placeholder="bijv. Buniks™ – Repellente ultrasuoni" />
           </div>
-
           <div>
             <div class="field-label">PRIJZEN</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
@@ -235,37 +257,30 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
               <div><div class="field-label" style="margin-top:4px">3x (€) optioneel</div><input class="field-input" id="b-3x" placeholder="57,99" /></div>
             </div>
           </div>
-
           <div>
             <div class="field-label">BRON 1 — plak hier info (AliExpress, leverancier, etc.)</div>
             <textarea class="field-textarea" id="b-bron1" placeholder="Plak hier productbeschrijving, specs, kenmerken — in elke taal..." style="min-height:100px"></textarea>
           </div>
-
           <div>
             <div class="field-label">BRON 2 — plak hier info (concurrent, webshop, etc.)</div>
             <textarea class="field-textarea" id="b-bron2" placeholder="Plak hier info van een andere webshop of bron..." style="min-height:100px"></textarea>
           </div>
-
           <div>
             <div class="field-label">BRON 3 — plak hier info (TikTok, review, etc.)</div>
             <textarea class="field-textarea" id="b-bron3" placeholder="Plak hier TikTok beschrijving, reviews of andere info..." style="min-height:100px"></textarea>
           </div>
-
           <div>
             <div class="field-label">BRON 4 — extra info (optioneel)</div>
             <textarea class="field-textarea" id="b-bron4" placeholder="Nog meer info? Plak hier..." style="min-height:70px"></textarea>
           </div>
-
           <div class="form-divider">
             <div class="form-divider-title">EXTRA INSTRUCTIES (optioneel)</div>
             <input class="field-input" id="b-niet" placeholder="bijv. niet vermelden ratten, focus op zomer, veilig voor kinderen..." />
           </div>
-
           <button class="btn-generate" id="gen-btn" onclick="generatePage()">
             ✍️ Genereer productpagina
           </button>
         </div>
-
         <div class="builder-preview">
           <div class="preview-header">
             <span class="preview-title" id="preview-title">Voorvertoning</span>
@@ -290,6 +305,78 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- FOTO GENERATOR -->
+    <div id="page-foto" style="display:none">
+      <div class="page-header">
+        <div><div class="page-title">📸 Foto Generator</div><div class="page-sub">Genereer lifestyle productfoto's met AI — klaar voor je webshop</div></div>
+      </div>
+      <div class="foto-wrap">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px">
+
+          <div style="margin-bottom:16px">
+            <div class="field-label">PRODUCTNAAM</div>
+            <input class="field-input" id="foto-naam" placeholder="bijv. Buniks™ ultrasoon ongediertebestrijder" />
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="field-label">PRODUCTOMSCHRIJVING (optioneel — helpt AI)</div>
+            <textarea class="field-textarea" id="foto-omschrijving" placeholder="bijv. klein wit apparaatje dat je in het stopcontact steekt, stuurt geluidsgolven uit om ongedierte te verjagen..." style="min-height:70px"></textarea>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="field-label">STIJL</div>
+            <div class="style-grid">
+              <div class="style-card active" id="style-woonkamer" onclick="selectStyle('woonkamer',this)">
+                <div class="style-card-icon">🛋️</div>
+                <div class="style-card-name">Woonkamer</div>
+                <div class="style-card-desc">Warm, thuis, gezellig</div>
+              </div>
+              <div class="style-card" id="style-buiten" onclick="selectStyle('buiten',this)">
+                <div class="style-card-icon">☀️</div>
+                <div class="style-card-name">Buiten/tuin</div>
+                <div class="style-card-desc">Licht, groen, natuur</div>
+              </div>
+              <div class="style-card" id="style-keuken" onclick="selectStyle('keuken',this)">
+                <div class="style-card-icon">🍳</div>
+                <div class="style-card-name">Keuken</div>
+                <div class="style-card-desc">Schoon, modern</div>
+              </div>
+              <div class="style-card" id="style-slaapkamer" onclick="selectStyle('slaapkamer',this)">
+                <div class="style-card-icon">🛏️</div>
+                <div class="style-card-name">Slaapkamer</div>
+                <div class="style-card-desc">Rustig, minimaal</div>
+              </div>
+              <div class="style-card" id="style-tafel" onclick="selectStyle('tafel',this)">
+                <div class="style-card-icon">📦</div>
+                <div class="style-card-name">Strak/studio</div>
+                <div class="style-card-desc">Clean achtergrond</div>
+              </div>
+              <div class="style-card" id="style-gebruik" onclick="selectStyle('gebruik',this)">
+                <div class="style-card-icon">🙌</div>
+                <div class="style-card-name">In gebruik</div>
+                <div class="style-card-desc">Persoon gebruikt het</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="field-label">AANTAL FOTO'S</div>
+            <div style="display:flex;gap:8px">
+              <button class="chip active" id="cnt-1" onclick="selectCount(1,this)">1 foto</button>
+              <button class="chip" id="cnt-2" onclick="selectCount(2,this)">2 foto's</button>
+              <button class="chip" id="cnt-3" onclick="selectCount(3,this)">3 foto's</button>
+            </div>
+          </div>
+
+          <button class="btn-generate" id="foto-btn" onclick="generateFotos()">
+            📸 Genereer foto's
+          </button>
+        </div>
+
+        <div id="foto-resultaat"></div>
       </div>
     </div>
 
@@ -359,9 +446,12 @@ Fout: "Precisione fino a 1 grammo"`;
 // ─── State ────────────────────────────────────────────────────────────────
 let products=[],pagesBuilt={},addedCount=0,scoreFilter='all',catFilter='';
 let selectedCountries=['NL','BE','DE','UK','US','FR'];
-let generatedHTML='', generatedNL='', generatedNL_text='', generatedIT_preview='', generatedSEO='', generatedMeta='', generatedWeggefilerd='', currentLang='it';
+let generatedHTML='',generatedNL='',generatedNL_text='',generatedIT_preview='',generatedSEO='',generatedMeta='',generatedWeggefilerd='',currentLang='it';
 let cfg={key:'',store:'miemasa.myshopify.com',token:'',minPrice:20,maxPrice:100};
 const countryNames={NL:'Nederland',BE:'Belgie',DE:'Duitsland',UK:'UK',US:'VS',FR:'Frankrijk'};
+
+// Foto state
+let fotoStyle='woonkamer', fotoCount=1;
 
 (function init(){
   try{const s=localStorage.getItem('mm_cfg');if(s)cfg={...cfg,...JSON.parse(s)};}catch(e){}
@@ -405,6 +495,116 @@ async function callClaude(prompt){
   const d=await r.json();
   if(!r.ok||d.error)throw new Error(d.error||'API fout '+r.status);
   return d.text.trim();
+}
+
+// ─── FOTO GENERATOR ───────────────────────────────────────────────────────
+function selectStyle(style, el){
+  fotoStyle = style;
+  document.querySelectorAll('.style-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selectCount(count, el){
+  fotoCount = count;
+  document.querySelectorAll('[id^="cnt-"]').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+const stylePrompts = {
+  woonkamer: 'cozy modern living room setting, warm natural lighting, Scandinavian interior design, plants in background',
+  buiten: 'bright outdoor garden setting, natural daylight, green plants, fresh air lifestyle',
+  keuken: 'clean modern kitchen counter, bright white tones, minimal and fresh',
+  slaapkamer: 'calm minimalist bedroom, soft natural light, neutral tones',
+  tafel: 'clean studio product photography, soft shadow, light grey background, professional',
+  gebruik: 'person using the product in a natural home environment, lifestyle photography'
+};
+
+async function generateFotos(){
+  const naam = document.getElementById('foto-naam').value.trim();
+  const omschrijving = document.getElementById('foto-omschrijving').value.trim();
+  if(!naam){ toast('Vul de productnaam in','err'); return; }
+
+  const btn = document.getElementById('foto-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Bezig...';
+
+  const resultaat = document.getElementById('foto-resultaat');
+  const loadingCards = Array.from({length: fotoCount}, (_,i) => `
+    <div class="foto-card">
+      <div class="foto-img-placeholder">
+        <span class="spin" style="width:24px;height:24px;border-width:3px"></span>
+        <span>Foto ${i+1} genereren...</span>
+      </div>
+      <div class="foto-card-body">
+        <div class="foto-card-label" style="color:var(--muted)">Even geduld — ~10 seconden</div>
+      </div>
+    </div>
+  `).join('');
+  resultaat.innerHTML = `<div class="foto-grid">${loadingCards}</div>`;
+
+  const styleContext = stylePrompts[fotoStyle] || stylePrompts.woonkamer;
+  const productContext = omschrijving ? ` — ${omschrijving}` : '';
+  const basePrompt = `Lifestyle product photography of "${naam}"${productContext}. ${styleContext}. Premium e-commerce photography, photorealistic, high quality. The product is clearly visible and central in the composition. No text, no logos, no watermarks.`;
+
+  const promises = Array.from({length: fotoCount}, async (_, i) => {
+    const variaties = ['front angle', 'slight side angle', 'top-down perspective'];
+    const angle = variaties[i % variaties.length];
+    const prompt = `${basePrompt} ${angle}.`;
+    const r = await fetch('/.netlify/functions/generate-image', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ prompt, style: 'natural', size: '1024x1024' })
+    });
+    const d = await r.json();
+    if(!r.ok || d.error) throw new Error(d.error || 'Fout bij foto '+(i+1));
+    return { url: d.url, index: i };
+  });
+
+  const cards = document.querySelectorAll('.foto-card');
+
+  // Verwerk één voor één als ze binnenkomen
+  const results = await Promise.allSettled(promises);
+  const newCards = results.map((result, i) => {
+    if(result.status === 'fulfilled'){
+      return `
+        <div class="foto-card">
+          <img class="foto-img" src="${result.value.url}" alt="Productfoto ${i+1}" loading="lazy" />
+          <div class="foto-card-body">
+            <div class="foto-card-label">${naam} — stijl: ${fotoStyle}</div>
+            <div class="foto-card-btns">
+              <a class="btn-download" href="${result.value.url}" download="miemasa-foto-${i+1}.jpg" target="_blank">⬇ Download</a>
+            </div>
+          </div>
+        </div>`;
+    } else {
+      return `
+        <div class="foto-card">
+          <div class="foto-img-placeholder" style="color:#f87171">
+            <span style="font-size:28px">⚠️</span>
+            <span>Fout: ${result.reason?.message||'onbekend'}</span>
+          </div>
+        </div>`;
+    }
+  }).join('');
+
+  resultaat.innerHTML = `<div class="foto-grid">${newCards}</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted);font-family:DM Mono,monospace">
+      💡 Tip: download de foto en upload hem in Shopify. DALL-E links verlopen na 1 uur.
+    </div>`;
+
+  const succeeded = results.filter(r=>r.status==='fulfilled').length;
+  toast(`${succeeded} van ${fotoCount} foto's klaar!`, succeeded>0?'ok':'err');
+  btn.disabled = false;
+  btn.innerHTML = '📸 Genereer foto\'s';
+}
+
+// Foto knop vanuit product card
+function fotoVanProduct(idx){
+  const p = products[idx];
+  document.getElementById('foto-naam').value = p.naam;
+  document.getElementById('foto-omschrijving').value = p.waarom || '';
+  showPage('foto');
+  toast('Product ingevuld — kies stijl en genereer!','ok');
 }
 
 // ─── PAGE GENERATOR ───────────────────────────────────────────────────────
@@ -458,11 +658,6 @@ Geef antwoord als JSON zonder markdown:
     const parsed=JSON.parse(clean);
     generatedHTML=parsed.html;
     generatedNL=parsed.nl_vertaling;
-    const preview=generatedHTML
-      .replace(/\[AFBEELDING_1\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 1</div>')
-      .replace(/\[AFBEELDING_2\]/g,'<div style="background:#e8eff3;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;margin:10px 0;border:1px dashed #ccd">📷 Afbeelding 2</div>');
-    const wegHtml=parsed.weggefilterd?`<div style="background:#fff8e6;border:1px solid #f0d060;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#7a6010"><strong>⚠️ Weggefilerd:</strong> ${parsed.weggefilterd}</div>`:'';
-    document.getElementById('preview-body').innerHTML=`<div style="background:#f0f4f7;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#555;line-height:1.6"><strong>SEO:</strong> ${parsed.seo_titel}<br><strong>Meta:</strong> ${parsed.seo_beschrijving}</div>${wegHtml}<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.7">${preview}</div>`;
     generatedNL_text=parsed.nl_vertaling;
     generatedSEO=parsed.seo_titel;
     generatedMeta=parsed.seo_beschrijving;
@@ -486,8 +681,6 @@ Geef antwoord als JSON zonder markdown:
   btn.innerHTML='✍️ Genereer productpagina';
 }
 
-// variabelen al gedeclareerd hierboven
-
 function showLang(lang){
   currentLang=lang;
   const body=document.getElementById('preview-body');
@@ -498,7 +691,7 @@ function showLang(lang){
     btnIt.style.background='rgba(25,58,71,0.3)';btnIt.style.borderColor='var(--accent2)';btnIt.style.color='var(--accent3)';
     btnNl.style.background='transparent';btnNl.style.borderColor='';btnNl.style.color='';
   }else{
-    body.innerHTML='<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.8;padding:4px 0;white-space:pre-wrap">'+generatedNL_text.replace(/\[AFBEELDING_1\]/g,'[📷 Afbeelding 1]').replace(/\[AFBEELDING_2\]/g,'[📷 Afbeelding 2]')+'</div>';
+    body.innerHTML='<div style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;line-height:1.8;padding:4px 0;white-space:pre-wrap">'+generatedNL_text.replace(/\*\*/g,'').replace(/\[AFBEELDING_1\]/g,'[📷 Afbeelding 1]').replace(/\[AFBEELDING_2\]/g,'[📷 Afbeelding 2]')+'</div>';
     btnNl.style.background='rgba(25,58,71,0.3)';btnNl.style.borderColor='var(--accent2)';btnNl.style.color='var(--accent3)';
     btnIt.style.background='transparent';btnIt.style.borderColor='';btnIt.style.color='';
   }
@@ -567,12 +760,10 @@ Geef ALLEEN JSON array, geen markdown:
 
 function sendToBuilder(idx){
   const p=products[idx];
-  // Vul productnaam in als hint
   document.getElementById('b-naam').value=p.naam;
   document.getElementById('b-1x').value=p.verkoopMin+'';
   document.getElementById('b-2x').value='';
   document.getElementById('b-3x').value='';
-  // Zet een hint in bron 1 zodat gebruiker weet wat te plakken
   document.getElementById('b-bron1').value='Productnaam: '+p.naam+'\nCategorie: '+p.categorie+'\nWaarom het verkoopt: '+p.waarom+'\n\n[Plak hier extra info van AliExpress of leverancier]';
   document.getElementById('b-bron2').value='';
   document.getElementById('b-bron3').value='';
@@ -581,7 +772,6 @@ function sendToBuilder(idx){
   pagesBuilt[idx]=true;
   const btn=document.getElementById('btn-'+idx);
   if(btn){btn.className='btn-card done';btn.innerHTML='✍️ In builder';}
-  // Bewaar producten zodat ze niet gereset worden
   showPage('builder');
   toast('Productnaam ingevuld — plak extra info en genereer!','ok');
 }
@@ -627,8 +817,9 @@ function render(){
           <a href="${tiktokUrl(p)}" target="_blank" class="btn-tt">📱 TikTok</a>
         </div>
         <div class="card-actions">
+          <button class="btn-card-img" onclick="fotoVanProduct(${idx})">📸 Foto's</button>
           <button class="btn-card ${done?'done':''}" id="btn-${idx}" onclick="sendToBuilder(${idx})">
-            ${done?'✍️ Terug naar builder':'+ Maak pagina'}
+            ${done?'✍️ In builder':'+ Pagina'}
           </button>
         </div>
       </div>
@@ -657,13 +848,12 @@ function clearAll(){
   document.getElementById('product-grid').innerHTML='<div class="empty-state"><div class="empty-icon">🌍</div><div class="empty-title">Klaar om te starten</div><div class="empty-desc">Selecteer landen en klik op Research starten.</div><button class="btn-primary" style="margin:0 auto;display:inline-flex" onclick="doResearch()">⚡ Start nu</button></div>';
 }
 function showPage(page){
-  ['research','builder','settings'].forEach(p=>{
+  ['research','builder','foto','settings'].forEach(p=>{
     const el=document.getElementById('page-'+p);
     if(el) el.style.display=p===page?'block':'none';
     const n=document.getElementById('nav-'+p);
     if(n)n.classList.toggle('active',p===page);
   });
-  // Producten NIET resetten bij pagina wisseling
 }
 function toast(msg,type){
   const t=document.getElementById('toast');
