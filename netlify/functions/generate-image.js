@@ -32,7 +32,7 @@ exports.handler = async function(event, context) {
 
   try {
     const body = JSON.parse(event.body);
-    const { prompt, style, size } = body;
+    const { prompt, size } = body;
 
     if (!prompt) {
       return {
@@ -43,11 +43,11 @@ exports.handler = async function(event, context) {
     }
 
     const postData = JSON.stringify({
-      model: 'dall-e-3',
+      model: 'gpt-image-1',
       prompt: prompt,
       n: 1,
       size: size || '1024x1024',
-      quality: 'standard'
+      quality: 'medium'
     });
 
     const result = await new Promise((resolve, reject) => {
@@ -81,13 +81,14 @@ exports.handler = async function(event, context) {
       };
     }
 
+    // gpt-image-1 geeft base64 terug, geen URL
+    const b64 = data.data[0].b64_json;
+    const dataUrl = 'data:image/png;base64,' + b64;
+
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({
-        url: data.data[0].url,
-        revised_prompt: data.data[0].revised_prompt
-      })
+      body: JSON.stringify({ url: dataUrl })
     };
 
   } catch(err) {
