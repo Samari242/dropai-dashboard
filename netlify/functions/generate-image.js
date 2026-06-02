@@ -47,8 +47,7 @@ exports.handler = async function(event, context) {
       prompt: prompt,
       n: 1,
       size: size || '1024x1024',
-      quality: 'standard',
-      style: style || 'natural'
+      quality: 'standard'
     });
 
     const result = await new Promise((resolve, reject) => {
