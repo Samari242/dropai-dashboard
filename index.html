@@ -460,22 +460,33 @@ INHOUD REGELS:
 - Als iets niet zeker is (bijv. batterij inbegrepen) — niet vermelden
 
 LAYOUT — ALTIJD EXACT DEZE VOLGORDE:
-1. <p><strong>Opening — één sterke zin wat het product doet/oplost</strong></p>
+VERBODEN: gebruik NOOIT labels zoals "Opening:", "Hoe het werkt:", "Geschikt voor:", "Specs:" als platte tekst. Alles moet echte HTML zijn.
+
+1. <p><strong>Één sterke openingszin wat het product doet of oplost.</strong></p>
 2. [AFBEELDING_1]
-3. <h4><strong>Sectie titel (hoe het werkt)</strong></h4>
+3. <h4><strong>Betekenisvolle sectietitel over hoe het werkt</strong></h4>
    <p>Uitleg in max 2 zinnen.</p>
-   <p>Eventueel een tweede alinea van max 2 zinnen.</p>
+   <p>Eventueel tweede alinea, max 2 zinnen.</p>
 4. [AFBEELDING_2]
-5. <h4><strong>Sectie titel (gebruik/geschikt voor)</strong></h4>
-   <p>Korte intro zin.</p>
-   Bullets met ✓ voor elk voordeel:
-   <p><span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
-   <span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
-   <span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
-   <span style="color: rgb(25, 58, 71);">✓</span> voordeel</p>
-6. Als er varianten zijn: <p>Disponibile nella versione [variant1] e [variant2].</p>
+5. <h4><strong>Betekenisvolle sectietitel over gebruik of geschiktheid</strong></h4>
+   <p>Korte intro zin over voor wie of waar het geschikt is.</p>
+   <p><span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span></p>
+6. Alleen als er varianten zijn: <p>Disponibile nella versione [variant1] e [variant2].</p>
 7. <h4><strong>Specifiche:</strong></h4>
-   <ul><li><strong>Label:</strong> waarde</li>...</ul>
+   <ul><li><strong>Capacità:</strong> 350ml</li><li><strong>Colore:</strong> bianco/nero</li>...</ul>
+
+SECTIETITELS — gebruik betekenisvolle Italiaanse titels, niet generieke labels:
+GOED: "Casa più tranquilla e protetta" / "Utilizzo semplice e continuo" / "Adatto per ogni ambiente"
+FOUT: "Hoe het werkt" / "Opening" / "Geschikt voor" / "Specs"
+
+KLEUREN — ALTIJD TOEPASSEN:
+- Alle tekst (titels, alinea's, bullets tekst, specs): style="color: #000000;"
+- Alleen de ✓ vinkjes: style="color: #193a47;"
+- h4 titels altijd: <h4><strong style="color: #000000;">titel</strong></h4>
+- Openingszin altijd: <p><strong style="color: #000000;">zin</strong></p>
 
 BULLETS — gebruiksvoordelen, GEEN specs:
 GOED: "Utilizzo semplice plug & play"
