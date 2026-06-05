@@ -311,23 +311,39 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <!-- FOTO GENERATOR -->
     <div id="page-foto" style="display:none">
       <div class="page-header">
-        <div><div class="page-title">📸 Foto Generator</div><div class="page-sub">Genereer lifestyle productfoto's met AI — klaar voor je webshop</div></div>
+        <div><div class="page-title">📸 Foto Generator</div><div class="page-sub">Upload je productfoto — AI maakt er een lifestyle foto van</div></div>
       </div>
       <div class="foto-wrap">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px">
 
+          <!-- UPLOAD ZONE -->
+          <div style="margin-bottom:20px">
+            <div class="field-label">STAP 1 — UPLOAD JE PRODUCTFOTO (optioneel maar aanbevolen)</div>
+            <div id="upload-zone" onclick="document.getElementById('foto-upload-input').click()" style="border:2px dashed rgba(38,84,102,0.5);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all 0.2s;background:rgba(25,58,71,0.08)">
+              <div style="font-size:32px;margin-bottom:8px">📁</div>
+              <div style="font-size:13px;font-weight:700;color:var(--muted3)">Klik om foto te uploaden</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">JPG of PNG — leveranciersfoto, AliExpress foto, etc.</div>
+            </div>
+            <input type="file" id="foto-upload-input" accept="image/*" style="display:none" onchange="handleFotoUpload(this)" />
+            <div id="upload-preview" style="display:none;margin-top:12px;display:none">
+              <div style="display:flex;align-items:center;gap:12px;background:rgba(25,58,71,0.15);border:1px solid rgba(38,84,102,0.3);border-radius:10px;padding:10px 14px">
+                <img id="upload-thumb" style="width:56px;height:56px;object-fit:cover;border-radius:6px" />
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:700;color:var(--accent3)" id="upload-naam-label">foto.jpg</div>
+                  <div style="font-size:11px;color:var(--muted)">AI gebruikt dit als basis voor de lifestyle foto</div>
+                </div>
+                <button onclick="verwijderUpload()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px">✕</button>
+              </div>
+            </div>
+          </div>
+
           <div style="margin-bottom:16px">
-            <div class="field-label">PRODUCTNAAM</div>
+            <div class="field-label">STAP 2 — PRODUCTNAAM</div>
             <input class="field-input" id="foto-naam" placeholder="bijv. Buniks™ ultrasoon ongediertebestrijder" />
           </div>
 
           <div style="margin-bottom:16px">
-            <div class="field-label">PRODUCTOMSCHRIJVING (optioneel — helpt AI)</div>
-            <textarea class="field-textarea" id="foto-omschrijving" placeholder="bijv. klein wit apparaatje dat je in het stopcontact steekt, stuurt geluidsgolven uit om ongedierte te verjagen..." style="min-height:70px"></textarea>
-          </div>
-
-          <div style="margin-bottom:16px">
-            <div class="field-label">STIJL</div>
+            <div class="field-label">STAP 3 — STIJL</div>
             <div class="style-grid">
               <div class="style-card active" id="style-woonkamer" onclick="selectStyle('woonkamer',this)">
                 <div class="style-card-icon">🛋️</div>
@@ -363,7 +379,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           </div>
 
           <div style="margin-bottom:16px">
-            <div class="field-label">AANTAL FOTO'S</div>
+            <div class="field-label">STAP 4 — AANTAL FOTO'S</div>
             <div style="display:flex;gap:8px">
               <button class="chip active" id="cnt-1" onclick="selectCount(1,this)">1 foto</button>
               <button class="chip" id="cnt-2" onclick="selectCount(2,this)">2 foto's</button>
@@ -498,6 +514,38 @@ async function callClaude(prompt){
 }
 
 // ─── FOTO GENERATOR ───────────────────────────────────────────────────────
+let uploadedImageBase64 = null;
+let uploadedImageType = null;
+
+function handleFotoUpload(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const dataUrl = e.target.result;
+    // Splits base64 data van de data URL
+    uploadedImageBase64 = dataUrl.split(',')[1];
+    uploadedImageType = file.type;
+    // Toon preview
+    document.getElementById('upload-thumb').src = dataUrl;
+    document.getElementById('upload-naam-label').textContent = file.name;
+    document.getElementById('upload-preview').style.display = 'flex';
+    document.getElementById('upload-zone').style.borderColor = 'rgba(38,84,102,0.8)';
+    document.getElementById('upload-zone').style.background = 'rgba(25,58,71,0.2)';
+    toast('Foto geladen — klaar om te genereren!', 'ok');
+  };
+  reader.readAsDataURL(file);
+}
+
+function verwijderUpload(){
+  uploadedImageBase64 = null;
+  uploadedImageType = null;
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('upload-zone').style.borderColor = 'rgba(38,84,102,0.5)';
+  document.getElementById('upload-zone').style.background = 'rgba(25,58,71,0.08)';
+  document.getElementById('foto-upload-input').value = '';
+}
+
 function downloadImg(btn){
   const img = btn.closest('.foto-card').querySelector('img');
   if(!img) return;
@@ -553,16 +601,22 @@ async function generateFotos(){
 
   const styleContext = stylePrompts[fotoStyle] || stylePrompts.woonkamer;
   const productContext = omschrijving ? ` — ${omschrijving}` : '';
-  const basePrompt = `Lifestyle product photography of "${naam}"${productContext}. ${styleContext}. Premium e-commerce photography, photorealistic, high quality. The product is clearly visible and central in the composition. No text, no logos, no watermarks.`;
+  const uploadHint = uploadedImageBase64 ? 'Use the provided product image as reference. Keep the exact same product, same shape and colors. ' : '';
+  const basePrompt = `${uploadHint}Create a lifestyle photo of the product "${naam}"${productContext}. Place the product in: ${styleContext}. Premium e-commerce photography, photorealistic, high quality. Product is clearly visible and central. No text, no logos, no watermarks, no Chinese characters.`;
 
   const promises = Array.from({length: fotoCount}, async (_, i) => {
     const variaties = ['front angle', 'slight side angle', 'top-down perspective'];
     const angle = variaties[i % variaties.length];
     const prompt = `${basePrompt} ${angle}.`;
+    const payload = { prompt, size: '1024x1024' };
+    if(uploadedImageBase64) {
+      payload.imageBase64 = uploadedImageBase64;
+      payload.imageType = uploadedImageType;
+    }
     const r = await fetch('/.netlify/functions/generate-image', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ prompt, style: 'natural', size: '1024x1024' })
+      body: JSON.stringify(payload)
     });
     const d = await r.json();
     if(!r.ok || d.error) throw new Error(d.error || 'Fout bij foto '+(i+1));
