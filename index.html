@@ -431,33 +431,58 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 
 <script>
 // ─── BRAND DNA ────────────────────────────────────────────────────────────
-const BRAND_DNA = `Je schrijft productbeschrijvingen voor een webshop die praktische probleemoplossende producten verkoopt.
+const BRAND_DNA = `Schrijf een Italiaanse productpagina voor een webshop. Schrijf rustig, menselijk en direct — alsof je het aan een vriend uitlegt. Geen schreeuwerige marketing.
 
-REGELS — ALTIJD VOLGEN:
-1. GEEN landverwijzingen — de pagina moet voor elk land werken
-2. Eerste zin = opening met het product centraal — pijnpunt OF belofte, direct duidelijk
-3. NOOIT technische specs in de tekst — die horen alleen in de Specifiche sectie onderaan
-4. NOOIT iets verzinnen of aanvullen — schrijf alleen wat de gebruiker invult
-5. GEEN overdreven marketing — geen "rivoluzionario", "qualita premium", "ordina subito"
-6. Korte, directe zinnen — menselijk en natuurlijk
-7. Als er een subtiele gezondheids/lifestyle hoek is — verwerk die zacht: "mangiare in modo più consapevole" niet "dimagrire"
-8. GEEN informatie benoemen waarvan je niet zeker bent (batterij inbegrepen, vergelijkingen met andere producten — alleen als de gebruiker het invult)
+TOON & STIJL:
+- Rustig, vertrouwenwekkend, eerlijk
+- Korte alinea's — maximaal 2 zinnen per alinea
+- Geen overdreven woorden: nooit "rivoluzionario", "incredibile", "straordinario", "premium", "ordina subito"
+- Geen uitroeptekens
+- Geen landverwijzingen (geen "in Italia", "per gli italiani" etc.)
 
-LAYOUT — ALTIJD IN DEZE VOLGORDE:
-1. <h4><strong>Opening — product centraal, pijnpunt of belofte</strong></h4>
+OPENING — HEEL BELANGRIJK:
+- Eerste zin = één concrete, sterke zin over wat het product doet of oplost
+- Direct over het product — geen vage intro
+- GOED: "Aiuta a tenere lontani zanzare, mosche e altri piccoli infestanti senza spray o sostanze chimiche."
+- GOED: "Tiene gli insetti lontani da casa, senza spray e senza odori."
+- FOUT: "Scopri il nostro innovativo prodotto per la tua casa."
+- FOUT: "Porta la precisione nella tua cucina con il nostro prodotto rivoluzionario."
+
+VARIANTEN — HEEL BELANGRIJK:
+- Als er varianten zijn (bijv. vloeibaar/schuim, maat S/M/L, kleur zwart/wit) → dit zijn KEUZES voor de klant, GEEN eigenschappen van het apparaat
+- GOED: "Disponibile nella versione liquida e mousse — scegli in base alle tue preferenze."
+- FOUT: "Il dispositivo funziona sia con liquido che con mousse."
+- Varianten altijd als aparte zin vermelden, nooit samenvoegen met de werking
+
+INHOUD REGELS:
+- NOOIT iets verzinnen — gebruik alleen wat uit de bronnen komt
+- Technische specs ALLEEN in de Specifiche sectie, nergens anders
+- Als iets niet zeker is (bijv. batterij inbegrepen) — niet vermelden
+
+LAYOUT — ALTIJD EXACT DEZE VOLGORDE:
+1. <p><strong>Opening — één sterke zin wat het product doet/oplost</strong></p>
 2. [AFBEELDING_1]
-3. <h4><strong>Sectie titel</strong></h4> + <p>korte uitleg hoe het werkt</p>
+3. <h4><strong>Sectie titel (hoe het werkt)</strong></h4>
+   <p>Uitleg in max 2 zinnen.</p>
+   <p>Eventueel een tweede alinea van max 2 zinnen.</p>
 4. [AFBEELDING_2]
-5. <h4><strong>Sectie titel gebruik/voordelen</strong></h4> + <p>korte tekst</p>
-6. Bullets: <p><span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>...</p>
-7. <h4><strong>Specifiche</strong></h4> + <ul> met alleen wat de gebruiker heeft ingevuld
+5. <h4><strong>Sectie titel (gebruik/geschikt voor)</strong></h4>
+   <p>Korte intro zin.</p>
+   Bullets met ✓ voor elk voordeel:
+   <p><span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
+   <span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
+   <span style="color: rgb(25, 58, 71);">✓</span> voordeel<br>
+   <span style="color: rgb(25, 58, 71);">✓</span> voordeel</p>
+6. Als er varianten zijn: <p>Disponibile nella versione [variant1] e [variant2].</p>
+7. <h4><strong>Specifiche:</strong></h4>
+   <ul><li><strong>Label:</strong> waarde</li>...</ul>
 
-VOORBEELD goede opening: "Finalmente sai esattamente cosa stai usando — senza andare a occhio."
-VOORBEELD slechte opening: "Porta la precisione nella tua cucina con il nostro prodotto rivoluzionario."
-
-BULLETS — schrijf gebruiksvoordelen, geen technische specs:
-Goed: "App con oltre 5.000 ricette"
-Fout: "Precisione fino a 1 grammo"`;
+BULLETS — gebruiksvoordelen, GEEN specs:
+GOED: "Utilizzo semplice plug & play"
+GOED: "Funzionamento silenzioso"
+GOED: "Senza sostanze chimiche"
+FOUT: "Frequenza 20-65 kHz"
+FOUT: "Potenza 5W"`;
 
 // ─── State ────────────────────────────────────────────────────────────────
 let products=[],pagesBuilt={},addedCount=0,scoreFilter='all',catFilter='';
