@@ -431,69 +431,73 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 
 <script>
 // ─── BRAND DNA ────────────────────────────────────────────────────────────
-const BRAND_DNA = `Schrijf een Italiaanse productpagina voor een webshop. Schrijf rustig, menselijk en direct — alsof je het aan een vriend uitlegt. Geen schreeuwerige marketing.
+const BRAND_DNA = `Je schrijft Italiaanse productpagina's. Schrijf zoals een enthousiaste vriend die een handig product aanraadt — direct, menselijk, licht verkoopuitnodigend maar nooit overdreven. Geen uitroeptekens. Geen nep-superlatieven.
 
-TOON & STIJL:
-- Rustig, vertrouwenwekkend, eerlijk
-- Korte alinea's — maximaal 2 zinnen per alinea
-- Geen overdreven woorden: nooit "rivoluzionario", "incredibile", "straordinario", "premium", "ordina subito"
-- Geen uitroeptekens
-- Geen landverwijzingen (geen "in Italia", "per gli italiani" etc.)
+TOON:
+- Pakkend en modern, niet saai of functioneel
+- Kort en scanbaar — mensen lezen niet, ze scannen
+- Schrijf vanuit het voordeel voor de gebruiker, niet vanuit het product
+- Nooit: "rivoluzionario", "incredibile", "premium", "ordina subito", uitroeptekens
+- Nooit landverwijzingen
 
-OPENING — HEEL BELANGRIJK:
-- Eerste zin = één concrete, sterke zin over wat het product doet of oplost
-- Direct over het product — geen vage intro
-- GOED: "Aiuta a tenere lontani zanzare, mosche e altri piccoli infestanti senza spray o sostanze chimiche."
-- GOED: "Tiene gli insetti lontani da casa, senza spray e senza odori."
-- FOUT: "Scopri il nostro innovativo prodotto per la tua casa."
-- FOUT: "Porta la precisione nella tua cucina con il nostro prodotto rivoluzionario."
+OVER BRONNEN:
+- Gebruik ALLEEN wat aantoonbaar uit de bronnen komt
+- Twijfel je of iets klopt? Laat het weg
+- Verzin NOOIT voordelen, claims of eigenschappen
 
-VARIANTEN — HEEL BELANGRIJK:
-- Als er varianten zijn (bijv. vloeibaar/schuim, maat S/M/L, kleur zwart/wit) → dit zijn KEUZES voor de klant, GEEN eigenschappen van het apparaat
-- GOED: "Disponibile nella versione liquida e mousse — scegli in base alle tue preferenze."
-- FOUT: "Il dispositivo funziona sia con liquido che con mousse."
-- Varianten altijd als aparte zin vermelden, nooit samenvoegen met de werking
+VARIANTEN:
+- Vloeibaar/schuim, zwart/wit, maat S/M = KEUZES voor de klant, geen eigenschappen van het product
+- Altijd als aparte zin: "Disponibile nella versione [X] e [Y]."
+- NOOIT samenvoegen met de werking van het product
 
-INHOUD REGELS:
-- NOOIT iets verzinnen — gebruik alleen wat uit de bronnen komt
-- Technische specs ALLEEN in de Specifiche sectie, nergens anders
-- Als iets niet zeker is (bijv. batterij inbegrepen) — niet vermelden
+DESIGN/UITERLIJK:
+- Als het product een mooi of modern design heeft — zet dat in de TEKST als voordeel, niet in de specs
+- Specs zijn alleen voor technische gegevens: materiaal, afmeting, kleur, gewicht
 
-LAYOUT — ALTIJD EXACT DEZE VOLGORDE:
-VERBODEN: gebruik NOOIT labels zoals "Opening:", "Hoe het werkt:", "Geschikt voor:", "Specs:" als platte tekst. Alles moet echte HTML zijn.
+HTML SKELET — GEBRUIK ALTIJD EXACT DIT, VIND ALLEEN DE TEKST IN:
 
-1. <p><strong>Één sterke openingszin wat het product doet of oplost.</strong></p>
-2. [AFBEELDING_1]
-3. <h4><strong>Betekenisvolle sectietitel over hoe het werkt</strong></h4>
-   <p>Uitleg in max 2 zinnen.</p>
-   <p>Eventueel tweede alinea, max 2 zinnen.</p>
-4. [AFBEELDING_2]
-5. <h4><strong>Betekenisvolle sectietitel over gebruik of geschiktheid</strong></h4>
-   <p>Korte intro zin over voor wie of waar het geschikt is.</p>
-   <p><span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-   <span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span></p>
-6. Alleen als er varianten zijn: <p>Disponibile nella versione [variant1] e [variant2].</p>
-7. <h4><strong>Specifiche:</strong></h4>
-   <ul><li><strong>Capacità:</strong> 350ml</li><li><strong>Colore:</strong> bianco/nero</li>...</ul>
+<p><strong style="color: #000000;">OPENINGSZIN — één zin, concreet voordeel of pijnpunt van de gebruiker.</strong></p>
 
-SECTIETITELS — gebruik betekenisvolle Italiaanse titels, niet generieke labels:
-GOED: "Casa più tranquilla e protetta" / "Utilizzo semplice e continuo" / "Adatto per ogni ambiente"
-FOUT: "Hoe het werkt" / "Opening" / "Geschikt voor" / "Specs"
+[AFBEELDING_1]
 
-KLEUREN — ALTIJD TOEPASSEN:
-- Alle tekst (titels, alinea's, bullets tekst, specs): style="color: #000000;"
-- Alleen de ✓ vinkjes: style="color: #193a47;"
-- h4 titels altijd: <h4><strong style="color: #000000;">titel</strong></h4>
-- Openingszin altijd: <p><strong style="color: #000000;">zin</strong></p>
+<h4><strong style="color: #000000;">SECTIETITEL — hoe het werkt, vanuit gebruikersvoordeel</strong></h4>
+<p style="color: #000000;">Eerste alinea — max 2 zinnen. Wat doet het product voor jou?</p>
+<p style="color: #000000;">Tweede alinea — max 2 zinnen. Aanvullend voordeel of gebruik.</p>
 
-BULLETS — gebruiksvoordelen, GEEN specs:
-GOED: "Utilizzo semplice plug & play"
-GOED: "Funzionamento silenzioso"
-GOED: "Senza sostanze chimiche"
-FOUT: "Frequenza 20-65 kHz"
-FOUT: "Potenza 5W"`;
+[AFBEELDING_2]
+
+<h4><strong style="color: #000000;">SECTIETITEL — design, uitstraling of extra voordeel</strong></h4>
+<p style="color: #000000;">Korte intro over design of uitstraling — max 2 zinnen.</p>
+<p>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span>
+</p>
+
+[ALLEEN ALS ER VARIANTEN ZIJN:]
+<p style="color: #000000;">Disponibile nella versione [variant1] e [variant2].</p>
+
+<h4><strong style="color: #000000;">Specifiche:</strong></h4>
+<ul>
+<li style="color: #000000;"><strong>Materiale:</strong> waarde</li>
+<li style="color: #000000;"><strong>Colori:</strong> waarde</li>
+<li style="color: #000000;"><strong>Dimensioni:</strong> waarde</li>
+</ul>
+
+VOORBEELD — zo schrijf je de openingszin:
+GOED: "Mani pulite senza sporcare il dispenser — tieni la mano sotto e il sapone arriva da solo."
+GOED: "Aiuta a tenere lontani zanzare e insetti senza spray o sostanze chimiche."
+FOUT: "Scopri il nostro innovativo dispenser di sapone rivoluzionario!"
+FOUT: "Opening: Geeft vloeibare zeep of schuim af zonder contact."
+
+VOORBEELD — zo schrijf je sectietitels:
+GOED: "Casa più tranquilla e protetta" / "Sempre le mani pulite, senza pensarci" / "Design moderno, ovunque tu voglia"
+FOUT: "Hoe het werkt" / "Automatische werking" / "Geschikt voor"
+
+VOORBEELD — zo schrijf je bullets:
+GOED: "Nessun contatto con il dispenser" / "Ricaricabile via USB" / "Compatibile con il tuo sapone preferito"
+FOUT: "Frequenza 20-65 kHz" / "Potenza 5W" / "Modern vierkant design"`;
 
 // ─── State ────────────────────────────────────────────────────────────────
 let products=[],pagesBuilt={},addedCount=0,scoreFilter='all',catFilter='';
