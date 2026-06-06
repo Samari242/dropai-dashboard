@@ -178,17 +178,20 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <nav class="sidebar">
     <div class="nav-lbl">Menu</div>
     <div class="nav-item active" id="nav-research" onclick="showPage('research')">🔍 Product Research <span class="nav-badge" id="nav-count">0</span></div>
+    <div class="nav-item" id="nav-favorieten" onclick="showPage('favorieten')">⭐ Favorieten <span class="nav-badge" id="nav-fav-count">0</span></div>
     <div class="nav-item" id="nav-builder" onclick="showPage('builder')">✍️ Pagina Bouwen</div>
     <div class="nav-item" id="nav-foto" onclick="showPage('foto')">📸 Foto Generator</div>
     <div class="nav-item" id="nav-settings" onclick="showPage('settings')">⚙️ Instellingen</div>
     <div class="nav-lbl">Categorie filter</div>
     <div class="nav-item" onclick="setCat('')">↩ Alles</div>
-    <div class="nav-item" onclick="setCat('Huishouden')">🏠 Huishouden</div>
-    <div class="nav-item" onclick="setCat('Huisdieren')">🐾 Huisdieren</div>
-    <div class="nav-item" onclick="setCat('Baby')">👶 Baby & kids</div>
+    <div class="nav-item" onclick="setCat('Huis')">🏠 Huis & wonen</div>
+    <div class="nav-item" onclick="setCat('Keuken')">🍳 Keuken</div>
+    <div class="nav-item" onclick="setCat('Badkamer')">🚿 Badkamer</div>
     <div class="nav-item" onclick="setCat('Tuin')">🌿 Tuin & buiten</div>
     <div class="nav-item" onclick="setCat('Auto')">🚗 Auto</div>
-    <div class="nav-item" onclick="setCat('Sport')">💪 Sport & outdoor</div>
+    <div class="nav-item" onclick="setCat('Verlichting')">💡 Verlichting</div>
+    <div class="nav-item" onclick="setCat('Gadgets')">📱 Gadgets & elektronica</div>
+    <div class="nav-item" onclick="setCat('Verzorging')">💆 Persoonlijke verzorging</div>
   </nav>
 
   <main class="content">
@@ -231,6 +234,23 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           <div class="empty-title">Klaar om te starten</div>
           <div class="empty-desc">Selecteer landen en klik op Research starten. AI zoekt trending producten — praktisch, probleemoplossend, visueel sterk.</div>
           <button class="btn-primary" style="margin:0 auto;display:inline-flex" onclick="doResearch()">⚡ Start nu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAVORIETEN -->
+    <div id="page-favorieten" style="display:none">
+      <div class="page-header">
+        <div><div class="page-title">⭐ Favorieten</div><div class="page-sub">Jouw opgeslagen producten — blijven bewaard op deze computer</div></div>
+        <div class="page-actions">
+          <button class="btn-ghost" onclick="clearFavorieten()">Alles wissen</button>
+        </div>
+      </div>
+      <div class="product-grid" id="fav-grid">
+        <div class="empty-state">
+          <div class="empty-icon">⭐</div>
+          <div class="empty-title">Nog geen favorieten</div>
+          <div class="empty-desc">Klik op ⭐ op een productkaart om hem hier op te slaan.</div>
         </div>
       </div>
     </div>
@@ -547,6 +567,13 @@ let fotoStyle='woonkamer', fotoCount=1;
   try{const s=localStorage.getItem('mm_cfg');if(s)cfg={...cfg,...JSON.parse(s)};}catch(e){}
   syncUI();
 })();
+function initFavCount(){
+  try{
+    const favs=JSON.parse(localStorage.getItem('mm_favorieten')||'[]');
+    document.getElementById('nav-fav-count').textContent=favs.length;
+  }catch(e){}
+}
+window.addEventListener('DOMContentLoaded', initFavCount);
 
 function syncUI(){
   document.getElementById('inp-key').value=cfg.key||'';
@@ -916,6 +943,114 @@ function sendToBuilder(idx){
 function fbUrl(p){return'https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&q='+encodeURIComponent(p.fbZoekterm||p.naam)+'&search_type=keyword_unordered&media_type=all';}
 function tiktokUrl(p){return'https://www.tiktok.com/search?q='+encodeURIComponent(p.tiktokZoekterm||p.naam);}
 
+// ─── FAVORIETEN ──────────────────────────────────────────────────────────
+function loadFavorieten(){
+  try { return JSON.parse(localStorage.getItem('mm_favorieten')||'[]'); } catch(e){ return []; }
+}
+function saveFavorieten(favs){
+  try { localStorage.setItem('mm_favorieten', JSON.stringify(favs)); } catch(e){}
+  document.getElementById('nav-fav-count').textContent = favs.length;
+}
+function isFavoriet(idx){
+  const favs = loadFavorieten();
+  const p = products[idx];
+  return p && favs.some(f => f.naam === p.naam);
+}
+function toggleFavoriet(idx, btn){
+  const p = products[idx];
+  if(!p) return;
+  let favs = loadFavorieten();
+  const exists = favs.findIndex(f => f.naam === p.naam);
+  if(exists >= 0){
+    favs.splice(exists, 1);
+    btn.textContent = '☆';
+    toast('Verwijderd uit favorieten', 'ok');
+  } else {
+    favs.push(p);
+    btn.textContent = '⭐';
+    toast('Opgeslagen als favoriet!', 'ok');
+  }
+  saveFavorieten(favs);
+  renderFavorieten();
+}
+function renderFavorieten(){
+  const favs = loadFavorieten();
+  document.getElementById('nav-fav-count').textContent = favs.length;
+  if(!favs.length){
+    document.getElementById('fav-grid').innerHTML = '<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Nog geen favorieten</div><div class="empty-desc">Klik op ⭐ op een productkaart om hem hier op te slaan.</div></div>';
+    return;
+  }
+  const flags={NL:'🇳🇱',BE:'🇧🇪',DE:'🇩🇪',UK:'🇬🇧',US:'🇺🇸',FR:'🇫🇷',IT:'🇮🇹'};
+  document.getElementById('fav-grid').innerHTML = favs.map((p,i) => {
+    const marge = p.verkoopMin - p.inkoopMax;
+    const sc = p.score>=85?'s-hot':p.score>=70?'s-good':'s-ok';
+    const flag = flags[p.trendLand]||'🌍';
+    return `<div class="product-card" style="animation-delay:${i*0.05}s">
+      <div class="card-visual"><span style="font-size:48px">${p.emoji}</span>
+        <span class="score-pill ${sc}">${p.score>=85?'🔥':'✅'} ${p.score}</span>
+        <span class="trend-pill">${p.trend}</span>
+        <span class="origin-pill">${flag} ${p.trendLand}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.categorie} · 🇮🇹 ${p.italiaansPotentieel||p.score}/100</div>
+        <div class="card-name">${p.naam}</div>
+        <div class="card-why">${p.waarom}</div>
+        <div class="card-metrics">
+          <div class="metric"><div class="metric-val">€${p.inkoopMin}–${p.inkoopMax}</div><div class="metric-label">INKOOP</div></div>
+          <div class="metric"><div class="metric-val">€${p.verkoopMin}–${p.verkoopMax}</div><div class="metric-label">VERKOOP</div></div>
+          <div class="metric"><div class="metric-val green">€${marge}+</div><div class="metric-label">MARGE</div></div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-card-img" onclick="verwijderFavoriet('${p.naam}')" style="flex:0.4;font-size:16px">⭐</button>
+          <button class="btn-card-img" onclick="fotoVanFavoriet(${i})">📸 Foto's</button>
+          <button class="btn-card" onclick="favToBuilder(${i})">+ Pagina</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function verwijderFavoriet(naam){
+  let favs = loadFavorieten();
+  favs = favs.filter(f => f.naam !== naam);
+  saveFavorieten(favs);
+  renderFavorieten();
+  toast('Verwijderd uit favorieten', 'ok');
+}
+function clearFavorieten(){
+  saveFavorieten([]);
+  renderFavorieten();
+  toast('Alle favorieten gewist', 'ok');
+}
+function favToBuilder(i){
+  const favs = loadFavorieten();
+  const p = favs[i];
+  if(!p) return;
+  document.getElementById('b-naam').value = p.naam;
+  document.getElementById('b-1x').value = p.verkoopMin+'';
+  document.getElementById('b-bron1').value = 'Productnaam: '+p.naam+'
+Categorie: '+p.categorie+'
+Waarom het verkoopt: '+p.waarom+'
+
+[Plak hier extra info van AliExpress of leverancier]';
+  document.getElementById('b-2x').value='';
+  document.getElementById('b-3x').value='';
+  document.getElementById('b-bron2').value='';
+  document.getElementById('b-bron3').value='';
+  document.getElementById('b-bron4').value='';
+  document.getElementById('b-niet').value='geen landverwijzingen';
+  showPage('builder');
+  toast('Product ingevuld vanuit favorieten!', 'ok');
+}
+function fotoVanFavoriet(i){
+  const favs = loadFavorieten();
+  const p = favs[i];
+  if(!p) return;
+  document.getElementById('foto-naam').value = p.naam;
+  document.getElementById('foto-omschrijving').value = p.waarom||'';
+  showPage('foto');
+  toast('Product ingevuld — kies stijl en genereer!', 'ok');
+}
+
 function render(){
   let list=products.filter(p=>{
     if(catFilter&&!p.categorie.toLowerCase().includes(catFilter.toLowerCase()))return false;
@@ -954,6 +1089,7 @@ function render(){
           <a href="${tiktokUrl(p)}" target="_blank" class="btn-tt">📱 TikTok</a>
         </div>
         <div class="card-actions">
+          <button class="btn-card-img" onclick="toggleFavoriet(${idx},this)" id="fav-${idx}" style="flex:0.4;font-size:16px">${isFavoriet(idx)?'⭐':'☆'}</button>
           <button class="btn-card-img" onclick="fotoVanProduct(${idx})">📸 Foto's</button>
           <button class="btn-card ${done?'done':''}" id="btn-${idx}" onclick="sendToBuilder(${idx})">
             ${done?'✍️ In builder':'+ Pagina'}
@@ -985,12 +1121,13 @@ function clearAll(){
   document.getElementById('product-grid').innerHTML='<div class="empty-state"><div class="empty-icon">🌍</div><div class="empty-title">Klaar om te starten</div><div class="empty-desc">Selecteer landen en klik op Research starten.</div><button class="btn-primary" style="margin:0 auto;display:inline-flex" onclick="doResearch()">⚡ Start nu</button></div>';
 }
 function showPage(page){
-  ['research','builder','foto','settings'].forEach(p=>{
+  ['research','favorieten','builder','foto','settings'].forEach(p=>{
     const el=document.getElementById('page-'+p);
     if(el) el.style.display=p===page?'block':'none';
     const n=document.getElementById('nav-'+p);
     if(n)n.classList.toggle('active',p===page);
   });
+  if(page==='favorieten') renderFavorieten();
 }
 function toast(msg,type){
   const t=document.getElementById('toast');
