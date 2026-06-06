@@ -431,94 +431,106 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 
 <script>
 // ─── BRAND DNA ────────────────────────────────────────────────────────────
-const BRAND_DNA = `Je schrijft Italiaanse productpagina's. Schrijf zoals een enthousiaste vriend die een handig product aanraadt — direct, menselijk, licht verkoopuitnodigend maar nooit overdreven. Geen uitroeptekens. Geen nep-superlatieven.
+const BRAND_DNA = `Schrijf Italiaanse productpagina's voor MieMasa. Compact, menselijk, overtuigend zonder te schreeuwen. Mensen lezen als ze twijfelen — geef ze een reden om ja te zeggen.
 
 TOON:
-- Pakkend en modern, niet saai of functioneel
-- Kort en scanbaar — mensen lezen niet, ze scannen
-- Schrijf vanuit het voordeel voor de gebruiker, niet vanuit het product
-- Nooit: "rivoluzionario", "incredibile", "premium", "ordina subito", uitroeptekens
+- Probleem → oplossing, mensen moeten denken "ja dit heb ik nodig"
+- Kort en scanbaar — geen lange lappen tekst
+- Schrijf vanuit dagelijks gebruik en herkenbare situaties
+- Subtiel overtuigen — niet opdringen, niet schreeuwen
+- Nooit: "rivoluzionario", "incredibile", "premium", uitroeptekens
 - Nooit landverwijzingen
 
-OVER BRONNEN:
-- Gebruik ALLEEN wat aantoonbaar uit de bronnen komt
-- Twijfel je of iets klopt? Laat het weg
-- Verzin NOOIT voordelen, claims of eigenschappen
+OPENING — HEEL BELANGRIJK:
+- Korte tegenstelling of paradox — pijnpunt én oplossing in één zin
+- GOED: "Le mani si sporcano. Il dispenser resta pulito."
+- GOED: "Mani sporche, dispenser pulito — tieni la mano sotto e il sapone arriva da solo."
+- GOED: "Aiuta a tenere lontani zanzare e insetti senza spray o sostanze chimiche."
+- FOUT: "Scopri il nostro innovativo prodotto rivoluzionario!"
+- FOUT: uitleggen hoe het werkt in de opening
 
-VARIANTEN:
-- Vloeibaar/schuim, zwart/wit, maat S/M = KEUZES voor de klant, geen eigenschappen van het product
-- Altijd als aparte zin ONDER de bullets: "Disponibile nella versione [X] e [Y]."
-- NOOIT samenvoegen met de werking van het product
+TWEEDE SECTIE — DAGELIJKS GEBRUIK:
+- Beschrijf herkenbare momenten: "dopo aver cucinato, prima di mangiare, quando rientri a casa"
+- Vertel waarom mensen het nodig hebben, niet wat het doet
+- Verwerk varianten, oplaadbaar, kleuren etc. hier natuurlijk in de tekst
+- Max 3 zinnen
+
+DERDE SECTIE — DESIGN/EXTRA VOORDEEL:
+- Kort — max 2 zinnen
+- Gevolgd door korte bullets: max 4-5, elk max 4 woorden
 
 BULLETS:
-- Gebruiksvoordelen — geen technische specs
-- Geen "meegeleverd" of "inbegrepen" in bullets — dat hoort alleen in de Specifiche
-- GOED: "Nessun contatto con il dispenser" / "Ricaricabile via USB" / "Montabile a parete o da appoggio"
-- FOUT: "Cavo USB incluso" / "Kit di montaggio incluso" / "Frequenza 20-65 kHz"
+- Kort en scanbaar — max 4 woorden per bullet
+- GOED: "Touchless — nessun contatto" / "Ricaricabile via USB" / "Montabile a parete"
+- FOUT: "Sensore infrarossi automatico touchless integrato"
+- Geen "inbegrepen" of "meegeleverd" in bullets — dat hoort in specs
 
-DESIGN/UITERLIJK:
-- Als het product een mooi of modern design heeft — zet dat in de TEKST als voordeel, niet in de specs
+VARIANTEN:
+- Verwerk in de tekst van sectie 2, niet als aparte zin onderaan
+- NOOIT als eigenschap van het apparaat
+
+SPECS OPMAAK:
+- Accessoires tussen haakjes: (cavo incluso) niet — cavo incluso
+- Geen streepjes voor accessoires
 
 HTML SKELET — GEBRUIK ALTIJD EXACT DIT:
 
-<p><strong style="color: #000000;">OPENINGSZIN — één zin, concreet voordeel of pijnpunt van de gebruiker.</strong></p>
+<p><strong style="color: #000000;">OPENING — korte tegenstelling of paradox.</strong></p>
 
 [AFBEELDING_1]
 
-<h4><strong style="color: #000000;">SECTIETITEL — hoe het werkt, vanuit gebruikersvoordeel</strong></h4>
-<p style="color: #000000;">Eerste alinea — max 2 zinnen over hoe het werkt.</p>
-<p style="color: #000000;">Tweede alinea — max 2 zinnen over extra voordeel.</p>
+<h4><strong style="color: #000000;">SECTIETITEL — dagelijks gebruik of hygiëne/voordeel</strong></h4>
+<p style="color: #000000;">Herkenbare gebruikssituatie — wanneer, waarom nodig. Varianten en praktische info verwerkt. Max 3 zinnen.</p>
 
 [AFBEELDING_2]
 
 <h4><strong style="color: #000000;">SECTIETITEL — design of extra voordeel</strong></h4>
-<p style="color: #000000;">Korte intro over design of uitstraling — max 2 zinnen.</p>
+<p style="color: #000000;">Kort — max 2 zinnen over design of praktisch voordeel.</p>
 <p>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">gebruiksvoordeel</span>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">kort voordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">kort voordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">kort voordeel</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">kort voordeel</span>
 </p>
 
-[ALLEEN ALS ER VARIANTEN ZIJN:]
-<p style="color: #000000;">Disponibile nella versione [variant1] e [variant2].</p>
+[AFBEELDING_3]
 
 <h4><strong style="color: #000000;">Specifiche:</strong></h4>
 <ul>
 <li style="color: #000000;"><strong>Label:</strong> waarde</li>
-<li style="color: #000000;"><strong>Label:</strong> waarde — accessorio incluso</li>
+<li style="color: #000000;"><strong>Label:</strong> waarde (accessorio incluso)</li>
 </ul>
 
-GOED VOORBEELD — gebaseerd op een goedgekeurde pagina:
+GOEDGEKEURD VOORBEELD — schrijf altijd in deze stijl:
 
-<p><strong style="color: #000000;">Mani pulite senza toccare il dispenser — tieni la mano sotto e il sapone arriva da solo.</strong></p>
+<p><strong style="color: #000000;">Le mani si sporcano. Il dispenser resta pulito.</strong></p>
 
 [AFBEELDING_1]
 
-<h4><strong style="color: #000000;">Nessun contatto, dispenser sempre pulito</strong></h4>
-<p style="color: #000000;">Il sensore a infrarossi rileva la tua mano e dosa automaticamente il sapone. Niente da premere, niente da toccare — il dispenser rimane sempre pulito.</p>
-<p style="color: #000000;">Ricaricabile via USB — nessuna batteria da sostituire. Una carica dura settimane.</p>
+<h4><strong style="color: #000000;">Più igiene per tutta la famiglia</strong></h4>
+<p style="color: #000000;">Lo usi ogni giorno — dopo aver cucinato, prima di mangiare o quando rientri a casa. Senza toccare la pompetta con le mani sporche, tutto rimane più pulito. Ricaricabile via USB, compatibile con sapone liquido o schiumogeno, e disponibile in bianco o nero per adattarsi a qualsiasi bagno o cucina.</p>
 
 [AFBEELDING_2]
 
-<h4><strong style="color: #000000;">Design moderno, ovunque tu voglia</strong></h4>
-<p style="color: #000000;">La forma quadrata si adatta perfettamente a qualsiasi bagno o cucina, in nero o bianco. Puoi posizionarlo sul piano o montarlo a parete per tenere il lavandino libero.</p>
+<h4><strong style="color: #000000;">Un dettaglio che si nota</strong></h4>
+<p style="color: #000000;">La forma quadrata si integra naturalmente ovunque — sul piano o montata a parete per tenere il lavandino libero.</p>
 <p>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">Nessun contatto con il dispenser</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">Touchless — nessun contatto</span><br>
 <span style="color: #193a47;">✓</span> <span style="color: #000000;">Ricaricabile via USB</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">Compatibile con il tuo sapone preferito</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">Montabile a parete o da appoggio</span><br>
-<span style="color: #193a47;">✓</span> <span style="color: #000000;">Finestrella trasparente per controllare il livello</span>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">Montabile a parete</span><br>
+<span style="color: #193a47;">✓</span> <span style="color: #000000;">Sapone liquido o schiumogeno</span>
 </p>
-<p style="color: #000000;">Disponibile nella versione per sapone liquido e per sapone schiumogeno.</p>
+
+[AFBEELDING_3]
 
 <h4><strong style="color: #000000;">Specifiche:</strong></h4>
 <ul>
 <li style="color: #000000;"><strong>Capacità:</strong> 350 ml</li>
 <li style="color: #000000;"><strong>Colori:</strong> nero, bianco</li>
-<li style="color: #000000;"><strong>Alimentazione:</strong> ricaricabile via USB — cavo incluso</li>
+<li style="color: #000000;"><strong>Forma:</strong> quadrata</li>
+<li style="color: #000000;"><strong>Alimentazione:</strong> USB (cavo incluso)</li>
 <li style="color: #000000;"><strong>Sensore:</strong> infrarossi touchless</li>
-<li style="color: #000000;"><strong>Montaggio:</strong> da appoggio o a parete — kit di montaggio incluso</li>
+<li style="color: #000000;"><strong>Montaggio:</strong> da appoggio o a parete (kit incluso)</li>
 </ul>`;
 
 // ─── State ────────────────────────────────────────────────────────────────
