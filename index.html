@@ -363,6 +363,11 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           </div>
 
           <div style="margin-bottom:16px">
+            <div class="field-label">PRODUCTOMSCHRIJVING (optioneel)</div>
+            <textarea class="field-textarea" id="foto-omschrijving" placeholder="bijv. klein wit apparaatje dat je in het stopcontact steekt..." style="min-height:60px"></textarea>
+          </div>
+
+          <div style="margin-bottom:16px">
             <div class="field-label">STAP 3 — STIJL</div>
             <div class="style-grid">
               <div class="style-card active" id="style-woonkamer" onclick="selectStyle('woonkamer',this)">
@@ -680,7 +685,8 @@ const stylePrompts = {
 async function generateFotos(){
   try {
   const naam = document.getElementById('foto-naam').value.trim();
-  const omschrijving = document.getElementById('foto-omschrijving').value.trim();
+  const omschrEl = document.getElementById('foto-omschrijving');
+  const omschrijving = omschrEl ? omschrEl.value.trim() : '';
   if(!naam){ toast('Vul de productnaam in','err'); return; }
 
   const btn = document.getElementById('foto-btn');
@@ -1051,9 +1057,11 @@ function favToBuilder(i){
 function fotoVanFavoriet(i){
   const favs = loadFavorieten();
   const p = favs[i];
-  if(!p) return;
-  document.getElementById('foto-naam').value = p.naam;
-  document.getElementById('foto-omschrijving').value = p.waarom||'';
+  if(!p){ toast('Product niet gevonden','err'); return; }
+  const naamEl = document.getElementById('foto-naam');
+  const omschrEl = document.getElementById('foto-omschrijving');
+  if(naamEl) naamEl.value = p.naam || '';
+  if(omschrEl) omschrEl.value = p.waarom || '';
   showPage('foto');
   toast('Product ingevuld — kies stijl en genereer!', 'ok');
 }
